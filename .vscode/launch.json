@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Test",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/test/port.test.js",
+            "stopOnEntry": false,
+            "args": [
+            ],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "console": "externalTerminal",
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--preserve-symlinks",
+                "--nolazy",
+                "--max_old_space_size=500000"
+            ],
+            "env": {
+                "UT_ENV": "test",
+                "NODE_PATH": "dev"
+            },
+            // "console": "externalTerminal",
+            "outputCapture": "std",
+            "sourceMaps": false,
+            "linux": {
+                "protocol": "inspector"
+            }
+        }
+    ]
+}
