@@ -37,7 +37,21 @@ require('ut-run').run({
                 body: 'test message'
             },
             result: (result, assert) => {
-                assert.equals(result.payload.return_code, 0);
+                assert.equals(result.payload.return_code, 0, 'sms successfully sent');
+            }
+        }, {
+            method: 'voicecom.exec',
+            name: 'simulate error',
+            params: {
+                from: '1111',
+                to: '2222',
+                messageId: 'test-automation',
+                text: 'test',
+                body: 'error'
+            },
+            error: (result, assert) => {
+                assert.ok(result instanceof Error, 'sms sending error');
+                assert.equals(result.type, 'sms.voicecom.service.1000', 'error handled correctly');
             }
         }]
     }

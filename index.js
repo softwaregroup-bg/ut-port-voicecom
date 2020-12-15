@@ -1,7 +1,8 @@
 const crypto = require('crypto');
 const templateRender = require('ut-function.template');
+const errors = require('./errors');
 
-module.exports = function voicecom({config, utNotify, utMethod, utError: {getError}}) {
+module.exports = function voicecom({config, registerErrors, utNotify, utMethod, utError: {getError}}) {
     return class voicecom extends require('ut-port-http')(...arguments) {
         get defaults() {
             return {
@@ -53,6 +54,12 @@ module.exports = function voicecom({config, utNotify, utMethod, utError: {getErr
             };
         }
 
+        async init(...params) {
+            const result = await super.init(...params);
+            Object.assign(this.errors, registerErrors(errors));
+            return result;
+        }
+
         handlers() {
             return {
                 'drainSend.event.receive'(msg, $meta) {
@@ -94,7 +101,8 @@ module.exports = function voicecom({config, utNotify, utMethod, utError: {getErr
                 },
                 receive: (msg, $meta) => {
                     if (msg.payload.return_code > 0) {
-                        throw this.errors.getError(`sms.voicecom.service.${msg.payload.return_code}`);
+                        const error = this.errors[`sms.voicecom.service.${msg.payload.return_code}`] || this.errors['sms.voicecom'];
+                        throw error();
                     }
                     return msg;
                 }
