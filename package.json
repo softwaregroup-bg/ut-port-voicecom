@@ -1,6 +1,6 @@
 {
     "name": "ut-port-voicecom",
-    "version": "7.1.0",
+    "version": "7.1.1",
     "main": "index.js",
     "dependencies": {
         "ut-function.template": "^1.6.3"
