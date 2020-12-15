@@ -1,5 +1,6 @@
 {
     "sms": "ut-sms error",
+    "sms.voicecom": "ut-sms voicecom error",
     "sms.voicecom.config": "Missing {key} in {location} config",
     "sms.voicecom.service.1000": "System error ",
     "sms.voicecom.service.1001": "Temporary overload ",
