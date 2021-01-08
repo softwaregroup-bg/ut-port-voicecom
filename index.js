@@ -61,6 +61,7 @@ module.exports = function voicecom({config, registerErrors, utNotify, utMethod, 
         }
 
         handlers() {
+            const voicecomError = code => (this.errors[`sms.voicecom.service.${code}`] || this.errors['sms.voicecom'])();
             return {
                 'drainSend.event.receive'(msg, $meta) {
                     $meta.mtid = 'notification';
@@ -101,10 +102,13 @@ module.exports = function voicecom({config, registerErrors, utNotify, utMethod, 
                 },
                 receive: (msg, $meta) => {
                     if (msg.payload.return_code > 0) {
-                        const error = this.errors[`sms.voicecom.service.${msg.payload.return_code}`] || this.errors['sms.voicecom'];
-                        throw error();
+                        throw voicecomError(msg.payload.return_code);
                     }
                     return msg;
+                },
+                'error.receive'(error, $meta) {
+                    if (!error.payload) throw error;
+                    throw voicecomError(error.payload.return_code);
                 }
             };
         }
