@@ -75,7 +75,8 @@ module.exports = function voicecom({config, registerErrors, utNotify, utMethod, 
                 [`${this.config.namespace}.exec.request.send`]: (msg, $meta) => {
                     const {voicecom} = config;
                     const hash = crypto.createHash('md5');
-                    const id = templateRender(voicecom.messageIdTemplate, {messageId: msg.messageId});
+                    const defer = new Date().toISOString().slice(0, 16).replace('T', ' ');
+                    const id = templateRender(voicecom.messageIdTemplate, {...msg, defer});
                     const smsToken = hash.update(id + voicecom.token).digest('hex');
                     const sms = {
                         sid: voicecom.sid,
@@ -83,7 +84,7 @@ module.exports = function voicecom({config, registerErrors, utNotify, utMethod, 
                         to: msg.to,
                         token: smsToken,
                         priority: 1,
-                        defer: new Date().toISOString().slice(0, 16).replace('T', ' '),
+                        defer,
                         send_order: ['sms'],
                         callback_url: '',
                         sms: {
