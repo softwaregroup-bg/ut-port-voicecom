@@ -1,3 +1,12 @@
+## [7.1.3](https://github.com/softwaregroup-bg/ut-port-voicecom/compare/v7.1.2...v7.1.3) (2021-03-02)
+
+
+### Bug Fixes
+
+* provide possibility to use defer in messageIdTemplate ([a915bb1](https://github.com/softwaregroup-bg/ut-port-voicecom/commit/a915bb11b50b11ad05480100acae4e0d65ed2132))
+
+
+
 ## [7.1.2](https://github.com/softwaregroup-bg/ut-port-voicecom/compare/v7.1.1...v7.1.2) (2021-01-08)
 
 
